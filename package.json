@@ -1,0 +1,24 @@
+{
+  "name": "investec",
+  "version": "1.0.0",
+  "description": "Investec",
+  "main": "api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "J Gool",
+  "license": "ISC",
+  "dependencies": {
+    "@types/body-parser": "^1.16.5",
+    "@types/csvtojson": "^1.1.4",
+    "@types/express": "^4.0.37",
+    "@types/node": "^8.0.31",
+    "body-parser": "^1.18.2",
+    "csvtojson": "^1.1.8",
+    "express": "^4.16.1",
+    "mysql": "^2.14.1",
+    "reflect-metadata": "^0.1.10",
+    "typeorm": "0.1.0-alpha.50",
+    "typescript": "^2.5.3"
+  }
+}

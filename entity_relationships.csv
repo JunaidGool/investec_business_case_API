@@ -1,0 +1,46 @@
+Parent Entity Id,Parent Entity Name,Relationship Type,Entity Id,Entity Name
+19515110,AAA Bank Ltd                           ,SHARES-LIMIT,16853055,AAA Bank Ltd (Singapore)               
+19515110,AAA Bank Ltd                           ,SHARES-LIMIT,20152544,AAA Bank Ltd (London)                  
+19515110,AAA Bank Ltd                           ,SHARES-LIMIT,21339009,"AAA Bank Limited, Acc Local (Pay to Hol"
+19515110,AAA Bank Ltd                           ,SHARES-LIMIT,21473347,"AAA Bank Limited, Singapore            "
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,18197044,BBB Bank Plc (Tokyo)               
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,19004830,BBB Bank Plc  (Jhb)                
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,19812616,BBB Bank Plc  (New York)           
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,20838841,BBB Bank Plc (Milan)               
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,20838843,Banrclays Bank Plc (Milan)              
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,20939344,BBB BANK PLC LON BRANCH - PRECIOUS 
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,20939469,BBB LONDON BRANCH -  FX            
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,20939747,BBB BANK PLC LON BRANCH - IRS PRECI
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,21021092,BBB Bank Plc Port Louis            
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,21021188,BBB Bank Plc Singapore             
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,21021189,BBB Bank Plc Hong Kong             
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,21087048,BBB Capital Ldn                    
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,21135656,"BBB Bank Plc, Dublin               "
+20230065,BBB Bank Plc                       ,SHARES-LIMIT,21135835,"BBB Bank Plc, Mauritius            "
+20709131,BBB Capital Securities Ltd         ,SHAREHOLDER,20230065,BBB Bank Plc                       
+20709131,BBB Capital Securities Ltd         ,AUTHORISED-SIGNATORY,21577267,Baa M Mr                           
+20709131,BBB Capital Securities Ltd         ,PRINCIPAL-EXECUTIVE-OFFICER,21577267,Baa M Mr                           
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,17911643,AAA Group Ltd                          
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,18197044,BBB Bank Plc (Tokyo)               
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,19004830,BBB Bank Plc  (Jhb)                
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,19515110,AAA Bank Ltd                           
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,19824806,AAA Trading and Investment Solution Ltd
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,20230065,BBB Bank Plc                       
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,20230066,BBB Plc                            
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,20620402,BBB Bank of Botswana Ltd           
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,20709131,BBB Capital Securities Ltd         
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,20709169,Wool Plc                            
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,20718681,AAA Insurance Company Ltd              
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,20928907,BBB Stockbrokers Ltd               
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,20985381,AAA Stockbrokers (Pty) Ltd             
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,21077239,AAA Insurance and Financial Advisors (P
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,21077631,AAA Financial Services Limited         
+20709348,BBB Bank Plc_LmtGrp                ,IS-CONNECTED-TO,21340552,BBB Africa Group Limited           
+21077239,AAA Insurance and Financial Advisors (P,DIRECTOR,21567858,Foo M Mr                           
+21077239,AAA Insurance and Financial Advisors (P,AUTHORISED-SIGNATORY,21575481,XYZ Mr                          
+21077239,AAA Insurance and Financial Advisors (P,DIRECTOR,21575481,XYZ Mr                          
+21077239,AAA Insurance and Financial Advisors (P,PRINCIPAL-EXECUTIVE-OFFICER,21575481,XYZ Mr                          
+21077239,AAA Insurance and Financial Advisors (P,AUTHORISED-SIGNATORY,21579119,Smit Mr                             
+21077239,AAA Insurance and Financial Advisors (P,DIRECTOR,21579119,Smit Mr                             
+21077631,AAA Financial Services Limited         ,DIRECTOR,20772615,England N MR                            
+21077631,AAA Financial Services Limited         ,DIRECTOR,21574656,AB Tom Mr                        

@@ -3,13 +3,15 @@ import * as bodyParser from 'body-parser';
 import 'reflect-metadata';
 import {createConnection} from 'typeorm';
 import * as apiConfig from './common/api_config';
+import {relationshipsData} from '../entity_relationships_data';
 
 /**
  * Controllers (route handlers)
  */
-import * as limitsController from './controllers/limits_controller';
+import * as parentChildController from './controllers/parent_child_relationship_controller';
 import * as entitiesController from './controllers/entities_controller';
-import * as parentRelationshipsController from './controllers/parent_relationships_controller';
+// import * as childEntityController from './controllers/entity_child_relationship_controller';
+
 
 /**
  * Create Express Server
@@ -41,10 +43,9 @@ api.listen(api.get('port'), () => {
 /**
  * Primary Api Routes
  */
-// api.post("/api/SaveLimits", limitsController.saveLimits);
-api.get('/api/importLimits', limitsController.importJsonLimits);
-api.get('/api/importEntities', entitiesController.importEntities);
-api.get('/api/importParentRelationships', parentRelationshipsController.importParentRelationships);
+api.get('/api/parent_child_relationship', parentChildController.parentChildRelation);
+api.get('/api/all_entities', entitiesController.parentEntityRelation);
+// api.get('/api/entity_child_relationship', childEntityController.childEntityRelation);
 
 /**
  * Create Connection to DB using configuration provided in
@@ -52,6 +53,8 @@ api.get('/api/importParentRelationships', parentRelationshipsController.importPa
  */
 createConnection(apiConfig.dbOptions).then(async connection => {
     console.log('Connected to DB');
+
+    
 }).catch(error => console.log('TypeORM connection error: ', error));
 
 module.exports = api;

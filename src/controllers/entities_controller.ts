@@ -1,52 +1,29 @@
 import {Request, Response} from 'express';
-import {EntitiesRepo} from '../repositories/entities_repository';
-import {EntitiesEntity} from '../entities/entities_entity';
+import {InvestecEntity} from '../entities/Entity';
+import {Parent} from '../entities/Parent';
+import {relationshipsData} from '../../entity_relationships_data';
+import {RelationshipRetrieval} from '../services/relationshipRetrival_service';
 import {getRepository} from 'typeorm';
-import {Converter} from 'csvtojson';
 
-export let importEntities = async(req: Request, res: Response) => {
+export let parentEntityRelation = async (req: Request, res: Response) => {
 
-    let entitiesRepo: EntitiesRepo = new EntitiesRepo();
+    let relationshipRetrieval = RelationshipRetrieval();
+
+    let relationship: any;
+
+    for(relationship of relationshipsData){
+
+        let parentEntity = await relationshipRetrieval.getOrCreateParent(relationship);
+        let parentRelation = await relationshipRetrieval.getOrCreateParentEntity(relationship, parentEntity);
+        let childEntity = await relationshipRetrieval.getOrCreateChild(relationship, parentEntity);
+        let childRelation = await relationshipRetrieval.getOrCreateChildEntity(relationship, childEntity)
+
+    }
+
+    let entity = getRepository(InvestecEntity)
     
-    let jsonChildEntities: EntitiesEntity = new EntitiesEntity();
+        let parentRelationship = await entity.find({})
+    
+        res.send(parentRelationship)
 
-    let converter = new Converter({});
-
-    converter.fromFile('../entity_relationships.csv', (err: any, result: any) => {
-
-        let manager = getRepository(EntitiesEntity);
-
-        manager.query("DELETE FROM entities");
-
-        if(err){
-            console.log('An Error has occured:   ' + err);
-        }
-
-        let json = result;
-
-        for(let i=0; i<json.length; i++){
-            
-            jsonChildEntities = json[i]
-
-            let uniqueChildEntityId = json[i]["Entity Id"];
-            let uniqueChildEntityName = json[i]["Entity Name"];
-
-            jsonChildEntities.Entity_Id = uniqueChildEntityId;
-            jsonChildEntities.Entity_Name = uniqueChildEntityName;
-
-            entitiesRepo.saveJsonEntities(jsonChildEntities).then((result: any) => {
-                
-                console.log("Result:  " + jsonChildEntities)
-            
-            }).catch(() => {
-                console.log("duplicate entry")
-            });
-        };
-
-        entitiesRepo.getAllChildEntities().then((result: any) => {
-
-            res.json(result)
-
-        });
-    });
-};
+}

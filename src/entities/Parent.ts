@@ -19,10 +19,4 @@ export class Parent {
     @OneToMany(type => Child, children => children.parent)
     children: Child[];
 
-    @OneToOne(type => Relationship, parentEntity => parentEntity.parent, {
-        cascadeInsert: true,
-        cascadeUpdate: true,
-        cascadeRemove: true
-    })
-    parentEntity: Relationship
 }

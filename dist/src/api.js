@@ -13,12 +13,14 @@ const bodyParser = require("body-parser");
 require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const apiConfig = require("./common/api_config");
+const entity_relationships_data_1 = require("../entity_relationships_data");
+const relationshipRetrival_service_1 = require("./services/relationshipRetrival_service");
 /**
  * Controllers (route handlers)
  */
 const parentChildController = require("./controllers/parent_child_relationship_controller");
 const entitiesController = require("./controllers/entities_controller");
-// import * as childEntityController from './controllers/entity_child_relationship_controller';
+const relationshipTypesController = require("./controllers/relationship_type_controller");
 /**
  * Create Express Server
  */
@@ -47,13 +49,22 @@ api.listen(api.get('port'), () => {
  */
 api.get('/api/parent_child_relationship', parentChildController.parentChildRelation);
 api.get('/api/all_entities', entitiesController.parentEntityRelation);
-// api.get('/api/entity_child_relationship', childEntityController.childEntityRelation);
+api.get('/api/all_relationship_types', relationshipTypesController.relationshipType);
 /**
  * Create Connection to DB using configuration provided in
  * apiConfig file
  */
 typeorm_1.createConnection(apiConfig.dbOptions).then((connection) => __awaiter(this, void 0, void 0, function* () {
     console.log('Connected to DB');
+    let relationshipRetrieval = relationshipRetrival_service_1.RelationshipRetrieval();
+    let relationship;
+    for (relationship of entity_relationships_data_1.relationshipsData) {
+        let parentEntity = yield relationshipRetrieval.getOrCreateParent(relationship);
+        let parentRelation = yield relationshipRetrieval.getOrCreateParentEntity(relationship, parentEntity);
+        let childEntity = yield relationshipRetrieval.getOrCreateChild(relationship, parentEntity);
+        let childRelation = yield relationshipRetrieval.getOrCreateChildEntity(relationship, childEntity);
+        let relationType = yield relationshipRetrieval.getOrCreateRelationshipType(relationship);
+    }
 })).catch(error => console.log('TypeORM connection error: ', error));
 module.exports = api;
 //# sourceMappingURL=api.js.map

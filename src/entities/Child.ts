@@ -13,7 +13,7 @@ export class Child {
     Child_ID: number;
 
     @Column()
-    Child_Name: string;
+    Relationship_Type : string;
 
     @ManyToOne(type => Parent, parent => parent.children, {
         cascadeInsert: true,
@@ -21,12 +21,5 @@ export class Child {
         cascadeRemove: true
     })
     parent: Parent;
-
-    @OneToOne(type => Relationship, entity => entity.child, {
-        cascadeInsert: true,
-        cascadeUpdate: true,
-        cascadeRemove: true
-    })
-    childEntity: Relationship
 
 }

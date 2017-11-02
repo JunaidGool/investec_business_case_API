@@ -35,15 +35,15 @@ export const RelationshipRetrieval = () => {
         if (!childEntity) {
 
             childEntity = new Child();
+            childEntity.Relationship_Type = relationship["Relationship Type"];
             childEntity.Child_ID = Number(relationship["Entity Id"]);
-            childEntity.Child_Name = relationship["Entity Name"];
             childEntity.parent = parent;
 
             await childRepo.save(childEntity).then((childEntity: Child) => {
                 return childEntity
             })
         }
-
+        return childEntity
     }
 
     const getOrCreateParentEntity = async (relationship: any, parent: Parent) => {
@@ -57,11 +57,12 @@ export const RelationshipRetrieval = () => {
             parentEntity = new InvestecEntity();
             parentEntity.Entity_ID = Number(relationship["Parent Entity Id"]);
             parentEntity.Entity_Name = relationship["Parent Entity Name"];
-            // parentEntity.parent = parent;
-
+            // parentEntity.Relationship_Type = relationship["Relationship Type"];
+        
             await entityRepo.save(parentEntity).then((parentEntity: InvestecEntity) => {
                 return parentEntity
             })
+            return parentEntity
         }
     }
 
@@ -74,24 +75,34 @@ export const RelationshipRetrieval = () => {
         if(!childEntity) {
 
             childEntity = new InvestecEntity();
-            childEntity = new InvestecEntity();
             childEntity.Entity_ID = Number(relationship["Entity Id"]);
             childEntity.Entity_Name = relationship["Entity Name"];
-            // childEntity.child = child;
-
+    
             await entityRepo.save(childEntity).then((childEntity: InvestecEntity) => {
                 return childEntity
             })
+
+            return childEntity
         }
     }
 
-    const getOrCreateRelationshipEntity = async (relationship: any, child: Child, parent: Parent) => {
+    const getOrCreateRelationshipType = async (relationship: any) => {
 
         let entityRepo = getRepository(Relationship);
 
-        let relationshipEntity: Relationship = await entityRepo.findOne({})
+        let relationshipEntity: Relationship = await entityRepo.findOne({Relationship_Type: relationship["Relationship Type"]});
 
+        if(!relationshipEntity){
 
+            relationshipEntity = new Relationship
+            relationshipEntity.Relationship_Type = relationship["Relationship Type"];
+
+            await entityRepo.save(relationshipEntity).then((relationshipEntity: Relationship) => {
+                return relationshipEntity
+            });
+
+            return relationshipEntity      
+        }
 
     }
 
@@ -100,18 +111,9 @@ export const RelationshipRetrieval = () => {
         getOrCreateParent,
         getOrCreateChild,
         getOrCreateParentEntity,
-        getOrCreateChildEntity
+        getOrCreateChildEntity,
+        getOrCreateRelationshipType
 
     }
 
 }
-
-
-
-// entitiesRepo.saveJsonEntities(jsonChildEntities).then((result: any) => {
-    
-//     console.log("Result:  " + jsonChildEntities)
-
-// }).catch(() => {
-//     console.log("duplicate entry")
-// });

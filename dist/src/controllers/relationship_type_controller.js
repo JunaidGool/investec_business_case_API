@@ -8,14 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Parent_1 = require("../entities/Parent");
+const relationship_1 = require("../entities/relationship");
 const typeorm_1 = require("typeorm");
-exports.parentChildRelation = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    let parent = typeorm_1.getRepository(Parent_1.Parent);
-    let parentRelationship = yield parent
-        .createQueryBuilder("parent")
-        .innerJoinAndSelect("parent.children", "child")
-        .getMany();
-    res.send(parentRelationship);
+exports.relationshipType = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    let entity = typeorm_1.getRepository(relationship_1.Relationship);
+    let relationshipType = yield entity.find({});
+    res.send(relationshipType);
 });
-//# sourceMappingURL=parent_child_relationship_controller.js.map
+//# sourceMappingURL=relationship_type_controller.js.map

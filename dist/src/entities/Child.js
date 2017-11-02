@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const Parent_1 = require("./Parent");
-const relationship_1 = require("./relationship");
 let Child = class Child {
 };
 __decorate([
@@ -25,7 +24,7 @@ __decorate([
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
-], Child.prototype, "Child_Name", void 0);
+], Child.prototype, "Relationship_Type", void 0);
 __decorate([
     typeorm_1.ManyToOne(type => Parent_1.Parent, parent => parent.children, {
         cascadeInsert: true,
@@ -34,14 +33,6 @@ __decorate([
     }),
     __metadata("design:type", Parent_1.Parent)
 ], Child.prototype, "parent", void 0);
-__decorate([
-    typeorm_1.OneToOne(type => relationship_1.Relationship, entity => entity.child, {
-        cascadeInsert: true,
-        cascadeUpdate: true,
-        cascadeRemove: true
-    }),
-    __metadata("design:type", relationship_1.Relationship)
-], Child.prototype, "childEntity", void 0);
 Child = __decorate([
     typeorm_1.Entity('child')
 ], Child);

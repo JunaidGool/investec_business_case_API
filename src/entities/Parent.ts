@@ -2,6 +2,7 @@ import {Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne} from 'typeo
 import {getRepository} from 'typeorm';
 import {Child} from './Child';
 import {InvestecEntity} from './Entity';
+import {Relationship} from './relationship'
 
 @Entity('parent')
 export class Parent {
@@ -18,11 +19,10 @@ export class Parent {
     @OneToMany(type => Child, children => children.parent)
     children: Child[];
 
-    // @OneToOne(type => InvestecEntity, parentEntity => parentEntity.parent, {
-    //     cascadeInsert: true,
-    //     cascadeUpdate: true,
-    //     cascadeRemove: true
-    // })
-    // parentEntity: InvestecEntity
-
+    @OneToOne(type => Relationship, parentEntity => parentEntity.parent, {
+        cascadeInsert: true,
+        cascadeUpdate: true,
+        cascadeRemove: true
+    })
+    parentEntity: Relationship
 }

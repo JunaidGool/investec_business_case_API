@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Parent_1 = require("../entities/Parent");
 const Child_1 = require("../entities/Child");
 const Entity_1 = require("../entities/Entity");
+const relationship_1 = require("../entities/relationship");
 const typeorm_1 = require("typeorm");
 exports.RelationshipRetrieval = () => {
     const getOrCreateParent = (relationship) => __awaiter(this, void 0, void 0, function* () {
@@ -20,7 +21,9 @@ exports.RelationshipRetrieval = () => {
             parentEntity = new Parent_1.Parent();
             parentEntity.Parent_ID = Number(relationship["Parent Entity Id"]);
             parentEntity.Parent_Name = relationship["Parent Entity Name"];
-            yield parentRepo.save(parentEntity);
+            yield parentRepo.save(parentEntity).then((parentEntity) => {
+                return parentEntity;
+            });
         }
         return parentEntity;
     });
@@ -32,36 +35,41 @@ exports.RelationshipRetrieval = () => {
             childEntity.Child_ID = Number(relationship["Entity Id"]);
             childEntity.Child_Name = relationship["Entity Name"];
             childEntity.parent = parent;
-            yield childRepo.save(childEntity);
+            yield childRepo.save(childEntity).then((childEntity) => {
+                return childEntity;
+            });
         }
-        return childEntity;
     });
     const getOrCreateParentEntity = (relationship, parent) => __awaiter(this, void 0, void 0, function* () {
         let entityRepo = typeorm_1.getRepository(Entity_1.InvestecEntity);
-        let parentEntity = yield entityRepo
-            .findOne({ Entity_ID: relationship["Parent Entity Id"] });
+        let parentEntity = yield entityRepo.findOne({ Entity_ID: relationship["Parent Entity Id"] });
         if (!parentEntity) {
             parentEntity = new Entity_1.InvestecEntity();
             parentEntity.Entity_ID = Number(relationship["Parent Entity Id"]);
             parentEntity.Entity_Name = relationship["Parent Entity Name"];
             // parentEntity.parent = parent;
-            yield entityRepo.save(parentEntity);
+            yield entityRepo.save(parentEntity).then((parentEntity) => {
+                return parentEntity;
+            });
         }
-        return parentEntity;
     });
     const getOrCreateChildEntity = (relationship, child) => __awaiter(this, void 0, void 0, function* () {
         let entityRepo = typeorm_1.getRepository(Entity_1.InvestecEntity);
-        let childEntity = yield entityRepo
-            .findOne({ Entity_ID: relationship["Entity Id"] });
+        let childEntity = yield entityRepo.findOne({ Entity_ID: relationship["Entity Id"] });
         if (!childEntity) {
             childEntity = new Entity_1.InvestecEntity();
             childEntity = new Entity_1.InvestecEntity();
             childEntity.Entity_ID = Number(relationship["Entity Id"]);
             childEntity.Entity_Name = relationship["Entity Name"];
             // childEntity.child = child;
-            yield entityRepo.save(childEntity);
+            yield entityRepo.save(childEntity).then((childEntity) => {
+                return childEntity;
+            });
         }
-        return childEntity;
+    });
+    const getOrCreateRelationshipEntity = (relationship, child, parent) => __awaiter(this, void 0, void 0, function* () {
+        let entityRepo = typeorm_1.getRepository(relationship_1.Relationship);
+        let relationshipEntity = yield entityRepo.findOne({});
     });
     return {
         getOrCreateParent,
@@ -70,4 +78,9 @@ exports.RelationshipRetrieval = () => {
         getOrCreateChildEntity
     };
 };
+// entitiesRepo.saveJsonEntities(jsonChildEntities).then((result: any) => {
+//     console.log("Result:  " + jsonChildEntities)
+// }).catch(() => {
+//     console.log("duplicate entry")
+// }); 
 //# sourceMappingURL=relationshipRetrival_service.js.map

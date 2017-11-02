@@ -1,6 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne} from 'typeorm';
 import {Parent} from './Parent';
-import {InvestecEntity} from './Entity'
+import {InvestecEntity} from './Entity';
+import {Relationship} from './relationship';
 
 @Entity('child')
 export class Child {
@@ -21,11 +22,11 @@ export class Child {
     })
     parent: Parent;
 
-    // @OneToOne(type => InvestecEntity, entity => entity.child, {
-    //     cascadeInsert: true,
-    //     cascadeUpdate: true,
-    //     cascadeRemove: true
-    // })
-    // childEntity: InvestecEntity
+    @OneToOne(type => Relationship, entity => entity.child, {
+        cascadeInsert: true,
+        cascadeUpdate: true,
+        cascadeRemove: true
+    })
+    childEntity: Relationship
 
 }

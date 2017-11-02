@@ -11,39 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const Parent_1 = require("./Parent");
-const relationship_1 = require("./relationship");
-let Child = class Child {
+const Child_1 = require("./Child");
+let Relationship = class Relationship {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
-], Child.prototype, "Generated_ID", void 0);
+], Relationship.prototype, "Generated_ID", void 0);
 __decorate([
-    typeorm_1.Column({ unique: true }),
-    __metadata("design:type", Number)
-], Child.prototype, "Child_ID", void 0);
+    typeorm_1.OneToOne(type => Parent_1.Parent, parent => parent.parentEntity),
+    typeorm_1.JoinColumn(),
+    __metadata("design:type", Parent_1.Parent)
+], Relationship.prototype, "parent", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
-], Child.prototype, "Child_Name", void 0);
+], Relationship.prototype, "Relationship_Type", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => Parent_1.Parent, parent => parent.children, {
-        cascadeInsert: true,
-        cascadeUpdate: true,
-        cascadeRemove: true
-    }),
-    __metadata("design:type", Parent_1.Parent)
-], Child.prototype, "parent", void 0);
-__decorate([
-    typeorm_1.OneToOne(type => relationship_1.Relationship, entity => entity.child, {
-        cascadeInsert: true,
-        cascadeUpdate: true,
-        cascadeRemove: true
-    }),
-    __metadata("design:type", relationship_1.Relationship)
-], Child.prototype, "childEntity", void 0);
-Child = __decorate([
-    typeorm_1.Entity('child')
-], Child);
-exports.Child = Child;
-//# sourceMappingURL=Child.js.map
+    typeorm_1.OneToOne(type => Child_1.Child, child => child.childEntity),
+    typeorm_1.JoinColumn(),
+    __metadata("design:type", Child_1.Child)
+], Relationship.prototype, "child", void 0);
+Relationship = __decorate([
+    typeorm_1.Entity('relationship')
+], Relationship);
+exports.Relationship = Relationship;
+//# sourceMappingURL=relationship.js.map

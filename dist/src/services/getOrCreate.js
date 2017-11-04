@@ -46,32 +46,15 @@ exports.GetOrCreate = () => {
         let parentRepo = typeorm_1.getRepository(Entity_1._Entity);
         let relationship = yield relationshipRepo
             .findOne({ relationshipType: data["Relationship Type"] });
-        if (!relationship) {
-            relationship = new Relationship_1.Relationship();
-            relationship.relationshipType = data["Relationship Type"];
-            yield relationshipRepo.save(relationship).then((relationship) => {
-                return relationship;
-            });
-        }
-        let findChild = yield childRepo.findOne({ entityID: data["Entity Id"] });
-        if (findChild) {
-            relationship.childEntity = childEntity;
-            yield relationshipRepo.save(relationship).then((relationship) => {
-                return relationship;
-            });
-        }
-        let findParent = yield parentRepo.findOne({ entityID: data["Parent Entity Id"] });
-        if (findParent) {
-            relationship.parentEntity = parentEntity;
-            yield relationshipRepo.save(relationship).then((relationship) => {
-                return relationship;
-            });
-        }
-        return {
-            relationship
-        };
+        relationship = new Relationship_1.Relationship();
+        relationship.relationshipType = data["Relationship Type"];
+        relationship.childEntity = childEntity;
+        relationship.parentEntity = parentEntity;
+        yield relationshipRepo.save(relationship).then((relationship) => {
+            return relationship;
+        });
     });
-    const loan = (data) => __awaiter(this, void 0, void 0, function* () {
+    const loan = (data, childEntity) => __awaiter(this, void 0, void 0, function* () {
         let loanRepo = typeorm_1.getRepository(Loan_1.Loan);
         let loan = yield loanRepo.findOne({ limitID: data["Limit Id"] });
         if (!loan) {
@@ -82,6 +65,7 @@ exports.GetOrCreate = () => {
             loan.product = data["Product"];
             loan.riskType = data["Risk Type"];
             loan.currency = data["Currency"];
+            loan.entity = childEntity;
             yield loanRepo.save(loan).then((loan) => {
                 return loan;
             });

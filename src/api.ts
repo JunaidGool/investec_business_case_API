@@ -3,10 +3,12 @@ import * as bodyParser from 'body-parser';
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import * as apiConfig from './common/api_config';
+import {_Entity} from './entities/Entity'
 import { relationshipData } from '../relationship_data';
-import { limitData } from '../limit_data'
+import { limitData } from '../limit_data';
 import { GetOrCreate } from './services/getOrCreate';
-import { _Entity } from './entities/Entity';
+import { Relationship} from './entities/Relationship'
+import {getRepository} from 'typeorm';
 
 /**
  * Controllers (route handlers)
@@ -61,10 +63,11 @@ createConnection(apiConfig.dbOptions).then(async connection => {
     console.log('Connected to DB');
 
     let getOrCreate = GetOrCreate();
+    let relationshipRepo = getRepository(Relationship);
     let relationship: any;
     let limit : any;
-    // let childEntity: _Entity;
-    // let parentEntity: _Entity;
+
+    relationshipRepo.query("DELETE FROM relationship");
 
     for(relationship of relationshipData){
 
@@ -72,27 +75,30 @@ createConnection(apiConfig.dbOptions).then(async connection => {
         let entityTable = await getOrCreate.entity(relationship);
 
         let childEntity = entityTable.childEntity;
-        let parentEntity = entityTable.parentEntity
-
-        console.log(childEntity)
+        let parentEntity = entityTable.parentEntity;
 
         // 2. get or create relationship table
          let relationshipTable = await getOrCreate.relationship(relationship, childEntity, parentEntity);
 
+         for(limit of limitData){
+            
+                    // 3. get or create limit table
+                    let loanTable = await getOrCreate.loan(limit, childEntity);
+
+                    // 4. get or create facility table
+                    let facilityTable = await getOrCreate.facility(limit);
+            
+                    // 5. get or create limit table
+                    let limitsTable = await getOrCreate.limit(limit);
+            
+                }
+
     }
 
-    for(limit of limitData){
+    
 
-        // 3. get or create limit table
-        let loanTable = await getOrCreate.loan(limit);
 
-        // 4. get or create facility table
-        let facilityTable = await getOrCreate.facility(limit);
 
-        // 5. get or create limit table
-        let limitsTable = await getOrCreate.limit(limit);
-
-    }
 
 }).catch(error => console.log('TypeORM connection error: ', error));
 

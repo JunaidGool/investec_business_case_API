@@ -44,7 +44,7 @@ export const GetOrCreate = () => {
         }
     }
 
-    const relationship = async (data: any, childEntity: _Entity, parentEntity: _Entity) => {
+    const relationship = async (data: any, childEntity:_Entity, parentEntity:_Entity) => {
 
         let relationshipRepo = getRepository(Relationship);
         let childRepo = getRepository(_Entity);
@@ -53,47 +53,18 @@ export const GetOrCreate = () => {
         let relationship: Relationship = await relationshipRepo
             .findOne({ relationshipType: data["Relationship Type"] });
 
-        if (!relationship) {
-
             relationship = new Relationship();
             relationship.relationshipType = data["Relationship Type"];
-
-            await relationshipRepo.save(relationship).then((relationship: Relationship) => {
-
-                return relationship
-            });
-        }
-
-        let findChild: _Entity = await childRepo.findOne({entityID: data["Entity Id"]});
-        
-        if (findChild) {
-
             relationship.childEntity = childEntity;
-
-            await relationshipRepo.save(relationship).then((relationship: Relationship) => {
-
-                return relationship
-            });
-        }
-
-        let findParent: _Entity = await parentRepo.findOne({entityID: data["Parent Entity Id"]})
-
-        if (findParent) {
-
             relationship.parentEntity = parentEntity;
 
             await relationshipRepo.save(relationship).then((relationship: Relationship) => {
-                
+
                 return relationship
             });
-        }
-
-        return {
-            relationship
-        }
     }
 
-    const loan = async (data: any) => {
+    const loan = async (data: any, childEntity:_Entity) => {
 
         let loanRepo = getRepository(Loan);
 
@@ -108,6 +79,7 @@ export const GetOrCreate = () => {
             loan.product = data["Product"];
             loan.riskType = data["Risk Type"];
             loan.currency = data["Currency"];
+            loan.entity = childEntity;
 
             await loanRepo.save(loan).then((loan: Loan) => {
                 return loan

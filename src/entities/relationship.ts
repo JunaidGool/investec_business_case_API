@@ -1,15 +1,28 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToOne, OneToMany, JoinColumn} from 'typeorm';
-import {Parent} from './Parent';
-import {Child} from './Child';
-import {InvestecEntity} from './Entity';
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {_Entity } from './Entity';
+
 
 @Entity('relationship')
 export class Relationship {
 
     @PrimaryGeneratedColumn()
-    Generated_ID: number;
+    relationshipID: number;
 
     @Column()
-    Relationship_Type: string;
+    relationshipType: string;
 
+    @ManyToOne(type => _Entity, parentEntity => parentEntity.parentRelationships, {
+        cascadeInsert: true,
+        cascadeUpdate: true,
+        cascadeRemove: true
+    })
+    parentEntity: _Entity;
+
+    @ManyToOne(type => _Entity, childEntity => childEntity.childRelationships, {
+        cascadeInsert: true,
+        cascadeUpdate: true,
+        cascadeRemove: true
+    })
+    childEntity: _Entity;
+    
 }

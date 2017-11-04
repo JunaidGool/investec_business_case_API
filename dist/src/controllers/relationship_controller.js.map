@@ -1,1 +1,1 @@
-{"version":3,"file":"relationship_controller.js","sourceRoot":"","sources":["../../../src/controllers/relationship_controller.ts"],"names":[],"mappings":";;;;;;;;;;AAQW,QAAA,gBAAgB,GAAG,CAAO,GAAY,EAAE,GAAa,EAAE,EAAE;AAGpE,CAAC,CAAA,CAAA"}
+{"version":3,"file":"Relationship_controller.js","sourceRoot":"","sources":["../../../src/controllers/Relationship_controller.ts"],"names":[],"mappings":";;;;;;;;;;AAGW,QAAA,YAAY,GAAG,CAAO,GAAY,EAAE,GAAa,EAAE,EAAE;IAE5D,GAAG,CAAC,IAAI,CAAC,0BAA0B,CAAC,CAAA;AACxC,CAAC,CAAA,CAAA"}

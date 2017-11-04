@@ -7,7 +7,7 @@ exports.dbOptions = {
     port: 3306,
     username: 'junaid',
     password: '1234',
-    database: 'investecdb',
+    database: 'investec',
     entities: [
         './entities/*.js'
     ],

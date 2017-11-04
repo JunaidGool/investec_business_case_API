@@ -8,14 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Parent_1 = require("../entities/Parent");
-const typeorm_1 = require("typeorm");
-exports.parentChildRelation = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    let parent = typeorm_1.getRepository(Parent_1.Parent);
-    let parentRelationship = yield parent
-        .createQueryBuilder("parent")
-        .innerJoinAndSelect("parent.children", "child")
-        .getMany();
-    res.send(parentRelationship);
+exports.entity = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    res.send("entity Route");
 });
-//# sourceMappingURL=parent_child_relationship_controller.js.map
+//# sourceMappingURL=entity_controller.js.map

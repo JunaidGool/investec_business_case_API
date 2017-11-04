@@ -7,7 +7,7 @@ export let dbOptions: ConnectionOptions = {
     port: 3306,
     username: 'junaid',
     password: '1234',
-    database: 'investecdb',
+    database: 'investec',
     entities: [
         './entities/*.js'
     ],

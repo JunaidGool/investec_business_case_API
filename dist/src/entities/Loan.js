@@ -1,0 +1,70 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const typeorm_1 = require("typeorm");
+const Entity_1 = require("./Entity");
+const Facility_1 = require("./Facility");
+const Limit_1 = require("./Limit");
+let Loan = class Loan {
+};
+__decorate([
+    typeorm_1.PrimaryColumn({ unique: true }),
+    __metadata("design:type", Number)
+], Loan.prototype, "limitID", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], Loan.prototype, "riskTakerGroupName", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], Loan.prototype, "riskTakerName", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], Loan.prototype, "product", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], Loan.prototype, "riskType", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Loan.prototype, "currency", void 0);
+__decorate([
+    typeorm_1.ManyToOne(type => Entity_1._Entity, entity => entity.entityLoans, {
+        cascadeInsert: true,
+        cascadeUpdate: true,
+        cascadeRemove: true
+    }),
+    __metadata("design:type", Entity_1._Entity)
+], Loan.prototype, "entity", void 0);
+__decorate([
+    typeorm_1.ManyToOne(type => Facility_1.Facility, facility => facility.facilityLoans, {
+        cascadeInsert: true,
+        cascadeUpdate: true,
+        cascadeRemove: true
+    }),
+    __metadata("design:type", Facility_1.Facility)
+], Loan.prototype, "facility", void 0);
+__decorate([
+    typeorm_1.ManyToOne(type => Limit_1.Limits, blimit => blimit.limitLoans, {
+        cascadeInsert: true,
+        cascadeUpdate: true,
+        cascadeRemove: true
+    }),
+    __metadata("design:type", Limit_1.Limits)
+], Loan.prototype, "limit", void 0);
+Loan = __decorate([
+    typeorm_1.Entity('loan')
+], Loan);
+exports.Loan = Loan;
+//# sourceMappingURL=Loan.js.map

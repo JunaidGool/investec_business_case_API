@@ -1,18 +1,25 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, OneToMany, JoinColumn } from 'typeorm';
-import { Parent } from './Parent';
-import { Child } from './Child';
-import { Relationship } from './relationship'
+import { Entity, Column, PrimaryColumn, OneToMany} from 'typeorm';
+import { Loan } from './Loan';
+import { Relationship } from './Relationship';
 
-@Entity('investecentity')
-export class InvestecEntity {
+@Entity('entity')
+export class _Entity {
 
-    @PrimaryGeneratedColumn()
-    Generated_ID: number;
-
-    @Column({ unique: true })
-    Entity_ID: number;
+    @PrimaryColumn({ unique: true })
+    entityID: number;
 
     @Column()
-    Entity_Name: string;
+    entityName: string;
+
+    @OneToMany(type => Loan, entityLimit => entityLimit.entity)
+    entityLoans: Loan[];
+
+    @OneToMany(type => Relationship, parentRelationship => parentRelationship.parentEntity)
+    parentRelationships: Relationship[];
+
+    @OneToMany(type => Relationship, childRelationship => childRelationship.childEntity)
+    childRelationships: Relationship[];
+
+
 
 }

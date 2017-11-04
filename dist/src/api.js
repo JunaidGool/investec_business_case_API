@@ -13,14 +13,17 @@ const bodyParser = require("body-parser");
 require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const apiConfig = require("./common/api_config");
-const entity_relationships_data_1 = require("../entity_relationships_data");
-const relationshipRetrival_service_1 = require("./services/relationshipRetrival_service");
+const relationship_data_1 = require("../relationship_data");
+const limit_data_1 = require("../limit_data");
+const getOrCreate_1 = require("./services/getOrCreate");
 /**
  * Controllers (route handlers)
  */
-const parentChildController = require("./controllers/parent_child_relationship_controller");
-const entitiesController = require("./controllers/entities_controller");
-const relationshipTypesController = require("./controllers/relationship_type_controller");
+const entityController = require("./controllers/entity_controller");
+const loantController = require("./controllers/loan_controller");
+const relationshipController = require("./controllers/Relationship_controller");
+const facilityController = require("./controllers/facility_controller");
+const limitController = require("./controllers/limit_controller");
 /**
  * Create Express Server
  */
@@ -47,23 +50,38 @@ api.listen(api.get('port'), () => {
 /**
  * Primary Api Routes
  */
-api.get('/api/parent_child_relationship', parentChildController.parentChildRelation);
-api.get('/api/all_entities', entitiesController.parentEntityRelation);
-api.get('/api/all_relationship_types', relationshipTypesController.relationshipType);
+api.get('/api/entity', entityController.entity);
+api.get('/api/loan', loantController.loan);
+api.get('/api/relationship', relationshipController.relationship);
+api.get('/api/facility', facilityController.facility);
+api.get('/api/limit', limitController.limit);
 /**
  * Create Connection to DB using configuration provided in
  * apiConfig file
  */
 typeorm_1.createConnection(apiConfig.dbOptions).then((connection) => __awaiter(this, void 0, void 0, function* () {
     console.log('Connected to DB');
-    let relationshipRetrieval = relationshipRetrival_service_1.RelationshipRetrieval();
+    let getOrCreate = getOrCreate_1.GetOrCreate();
     let relationship;
-    for (relationship of entity_relationships_data_1.relationshipsData) {
-        let parentEntity = yield relationshipRetrieval.getOrCreateParent(relationship);
-        let parentRelation = yield relationshipRetrieval.getOrCreateParentEntity(relationship, parentEntity);
-        let childEntity = yield relationshipRetrieval.getOrCreateChild(relationship, parentEntity);
-        let childRelation = yield relationshipRetrieval.getOrCreateChildEntity(relationship, childEntity);
-        let relationType = yield relationshipRetrieval.getOrCreateRelationshipType(relationship);
+    let limit;
+    // let childEntity: _Entity;
+    // let parentEntity: _Entity;
+    for (relationship of relationship_data_1.relationshipData) {
+        // 1. get or create entity table
+        let entityTable = yield getOrCreate.entity(relationship);
+        let childEntity = entityTable.childEntity;
+        let parentEntity = entityTable.parentEntity;
+        console.log(childEntity);
+        // 2. get or create relationship table
+        let relationshipTable = yield getOrCreate.relationship(relationship, childEntity, parentEntity);
+    }
+    for (limit of limit_data_1.limitData) {
+        // 3. get or create limit table
+        let loanTable = yield getOrCreate.loan(limit);
+        // 4. get or create facility table
+        let facilityTable = yield getOrCreate.facility(limit);
+        // 5. get or create limit table
+        let limitsTable = yield getOrCreate.limit(limit);
     }
 })).catch(error => console.log('TypeORM connection error: ', error));
 module.exports = api;

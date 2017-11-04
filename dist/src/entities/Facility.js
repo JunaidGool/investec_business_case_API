@@ -10,31 +10,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const Parent_1 = require("./Parent");
-let Child = class Child {
+const Loan_1 = require("./Loan");
+let Facility = class Facility {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    typeorm_1.PrimaryColumn({ unique: true }),
     __metadata("design:type", Number)
-], Child.prototype, "Generated_ID", void 0);
-__decorate([
-    typeorm_1.Column({ unique: true }),
-    __metadata("design:type", Number)
-], Child.prototype, "Child_ID", void 0);
+], Facility.prototype, "facilityID", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
-], Child.prototype, "Relationship_Type", void 0);
+], Facility.prototype, "facilityType", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => Parent_1.Parent, parent => parent.children, {
-        cascadeInsert: true,
-        cascadeUpdate: true,
-        cascadeRemove: true
-    }),
-    __metadata("design:type", Parent_1.Parent)
-], Child.prototype, "parent", void 0);
-Child = __decorate([
-    typeorm_1.Entity('child')
-], Child);
-exports.Child = Child;
-//# sourceMappingURL=Child.js.map
+    typeorm_1.OneToMany(type => Loan_1.Loan, facilityLoan => facilityLoan.facility),
+    __metadata("design:type", Array)
+], Facility.prototype, "facilityLoans", void 0);
+Facility = __decorate([
+    typeorm_1.Entity('facility')
+], Facility);
+exports.Facility = Facility;
+//# sourceMappingURL=Facility.js.map

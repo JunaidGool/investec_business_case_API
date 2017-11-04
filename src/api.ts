@@ -1,17 +1,21 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import 'reflect-metadata';
-import {createConnection} from 'typeorm';
+import { createConnection } from 'typeorm';
 import * as apiConfig from './common/api_config';
-import {relationshipsData} from '../entity_relationships_data';
-import {RelationshipRetrieval} from './services/relationshipRetrival_service';
+import { relationshipData } from '../relationship_data';
+import { limitData } from '../limit_data'
+import { GetOrCreate } from './services/getOrCreate';
+import { _Entity } from './entities/Entity';
 
 /**
  * Controllers (route handlers)
  */
-import * as parentChildController from './controllers/parent_child_relationship_controller';
-import * as entitiesController from './controllers/entities_controller';
-import * as relationshipTypesController from './controllers/relationship_type_controller';
+import * as entityController from './controllers/entity_controller';
+import * as loantController from './controllers/loan_controller';
+import * as relationshipController from './controllers/Relationship_controller';
+import * as facilityController from './controllers/facility_controller';
+import * as limitController from './controllers/limit_controller';
 
 /**
  * Create Express Server
@@ -43,9 +47,11 @@ api.listen(api.get('port'), () => {
 /**
  * Primary Api Routes
  */
-api.get('/api/parent_child_relationship', parentChildController.parentChildRelation);
-api.get('/api/all_entities', entitiesController.parentEntityRelation);
-api.get('/api/all_relationship_types', relationshipTypesController.relationshipType);
+api.get('/api/entity', entityController.entity);
+api.get('/api/loan', loantController.loan);
+api.get('/api/relationship', relationshipController.relationship );
+api.get('/api/facility', facilityController.facility);
+api.get('/api/limit', limitController.limit);
 
 /**
  * Create Connection to DB using configuration provided in
@@ -54,21 +60,40 @@ api.get('/api/all_relationship_types', relationshipTypesController.relationshipT
 createConnection(apiConfig.dbOptions).then(async connection => {
     console.log('Connected to DB');
 
-    let relationshipRetrieval = RelationshipRetrieval();
-    
-        let relationship: any;
-    
-        for(relationship of relationshipsData){
-    
-            let parentEntity = await relationshipRetrieval.getOrCreateParent(relationship);
-            let parentRelation = await relationshipRetrieval.getOrCreateParentEntity(relationship, parentEntity);
-            let childEntity = await relationshipRetrieval.getOrCreateChild(relationship, parentEntity);
-            let childRelation = await relationshipRetrieval.getOrCreateChildEntity(relationship, childEntity);
-            let relationType = await relationshipRetrieval.getOrCreateRelationshipType(relationship)
-    
-        }
+    let getOrCreate = GetOrCreate();
+    let relationship: any;
+    let limit : any;
+    // let childEntity: _Entity;
+    // let parentEntity: _Entity;
 
-    
+    for(relationship of relationshipData){
+
+        // 1. get or create entity table
+        let entityTable = await getOrCreate.entity(relationship);
+
+        let childEntity = entityTable.childEntity;
+        let parentEntity = entityTable.parentEntity
+
+        console.log(childEntity)
+
+        // 2. get or create relationship table
+         let relationshipTable = await getOrCreate.relationship(relationship, childEntity, parentEntity);
+
+    }
+
+    for(limit of limitData){
+
+        // 3. get or create limit table
+        let loanTable = await getOrCreate.loan(limit);
+
+        // 4. get or create facility table
+        let facilityTable = await getOrCreate.facility(limit);
+
+        // 5. get or create limit table
+        let limitsTable = await getOrCreate.limit(limit);
+
+    }
+
 }).catch(error => console.log('TypeORM connection error: ', error));
 
 module.exports = api;

@@ -10,27 +10,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const Child_1 = require("./Child");
-let Parent = class Parent {
+const Loan_1 = require("./Loan");
+let Limits = class Limits {
 };
 __decorate([
-    typeorm_1.PrimaryGeneratedColumn(),
+    typeorm_1.PrimaryColumn({ unique: true }),
     __metadata("design:type", Number)
-], Parent.prototype, "Generated_ID", void 0);
+], Limits.prototype, "limitID", void 0);
 __decorate([
-    typeorm_1.Column({ unique: true }),
-    __metadata("design:type", Number)
-], Parent.prototype, "Parent_ID", void 0);
-__decorate([
-    typeorm_1.Column({ unique: true }),
+    typeorm_1.Column(),
     __metadata("design:type", String)
-], Parent.prototype, "Parent_Name", void 0);
+], Limits.prototype, "limitType", void 0);
 __decorate([
-    typeorm_1.OneToMany(type => Child_1.Child, children => children.parent),
-    __metadata("design:type", Array)
-], Parent.prototype, "children", void 0);
-Parent = __decorate([
-    typeorm_1.Entity('parent')
-], Parent);
-exports.Parent = Parent;
-//# sourceMappingURL=Parent.js.map
+    typeorm_1.OneToMany(type => Loan_1.Loan, limitLoan => limitLoan.limit),
+    __metadata("design:type", Loan_1.Loan)
+], Limits.prototype, "limitLoans", void 0);
+Limits = __decorate([
+    typeorm_1.Entity('limits')
+], Limits);
+exports.Limits = Limits;
+//# sourceMappingURL=Limit.js.map

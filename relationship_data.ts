@@ -1,4 +1,4 @@
-export let relationshipsData = [
+export let relationshipData = [
         {
             "Parent Entity Id": "19515110",
             "Parent Entity Name": "AAA Bank Ltd",

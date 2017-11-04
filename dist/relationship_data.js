@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.relationshipsData = [
+exports.relationshipData = [
     {
         "Parent Entity Id": "19515110",
         "Parent Entity Name": "AAA Bank Ltd",
@@ -317,4 +317,4 @@ exports.relationshipsData = [
         "Entity Name": "AB Tom Mr"
     }
 ];
-//# sourceMappingURL=entity_relationships_data.js.map
+//# sourceMappingURL=relationship_data.js.map

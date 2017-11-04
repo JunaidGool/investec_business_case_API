@@ -1,4 +1,4 @@
-export let entitiesData = [
+export let limitData = [
         {
             "Entity Id": "19515110",
             "Risk Taker Group Name": "ICIB - SA - Financial Products",

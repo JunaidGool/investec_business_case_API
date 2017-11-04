@@ -75,14 +75,14 @@ typeorm_1.createConnection(apiConfig.dbOptions).then((connection) => __awaiter(t
         let parentEntity = entityTable.parentEntity;
         // 2. get or create relationship table
         let relationshipTable = yield getOrCreate.relationship(relationship, childEntity, parentEntity);
-        for (limit of limit_data_1.limitData) {
-            // 3. get or create limit table
-            let loanTable = yield getOrCreate.loan(limit, childEntity);
-            // 4. get or create facility table
-            let facilityTable = yield getOrCreate.facility(limit);
-            // 5. get or create limit table
-            let limitsTable = yield getOrCreate.limit(limit);
-        }
+    }
+    for (limit of limit_data_1.limitData) {
+        // 3. get or create limit table
+        let loanTable = yield getOrCreate.loan(limit);
+        // 4. get or create facility table
+        let facilityTable = yield getOrCreate.facility(limit);
+        // 5. get or create limit table
+        let limitsTable = yield getOrCreate.limit(limit);
     }
 })).catch(error => console.log('TypeORM connection error: ', error));
 module.exports = api;

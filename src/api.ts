@@ -80,25 +80,20 @@ createConnection(apiConfig.dbOptions).then(async connection => {
         // 2. get or create relationship table
          let relationshipTable = await getOrCreate.relationship(relationship, childEntity, parentEntity);
 
-         for(limit of limitData){
-            
-                    // 3. get or create limit table
-                    let loanTable = await getOrCreate.loan(limit, childEntity);
-
-                    // 4. get or create facility table
-                    let facilityTable = await getOrCreate.facility(limit);
-            
-                    // 5. get or create limit table
-                    let limitsTable = await getOrCreate.limit(limit);
-            
-                }
-
     }
 
-    
+    for(limit of limitData){
 
+        // 3. get or create limit table
+        let loanTable = await getOrCreate.loan(limit);
 
+        // 4. get or create facility table
+        let facilityTable = await getOrCreate.facility(limit);
 
+        // 5. get or create limit table
+        let limitsTable = await getOrCreate.limit(limit);
+
+    }
 
 }).catch(error => console.log('TypeORM connection error: ', error));
 

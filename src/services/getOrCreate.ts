@@ -7,18 +7,18 @@ import { getRepository } from 'typeorm';
 
 export const GetOrCreate = () => {
 
-    const entity = async (data: any) => {
+    const entity = async (relationship: any) => {
 
         let entityRepo = getRepository(_Entity);
 
-        let childEntity: _Entity = await entityRepo.findOne({ entityID: data["Entity Id"] });
-        let parentEntity: _Entity = await entityRepo.findOne({ entityID: data["Parent Entity Id"] });
+        let childEntity: _Entity = await entityRepo.findOne({ entityID: relationship["Entity Id"] });
+        let parentEntity: _Entity = await entityRepo.findOne({ entityID: relationship["Parent Entity Id"] });
 
         if (!childEntity) {
 
             childEntity = new _Entity();
-            childEntity.entityID = Number(data["Entity Id"]);
-            childEntity.entityName = data["Entity Name"];
+            childEntity.entityID = Number(relationship["Entity Id"]);
+            childEntity.entityName = relationship["Entity Name"];
 
             await entityRepo.save(childEntity).then((childEntity: _Entity) => {
 
@@ -29,8 +29,8 @@ export const GetOrCreate = () => {
         if (!parentEntity) {
 
             parentEntity = new _Entity();
-            parentEntity.entityID = Number(data["Parent Entity Id"]);
-            parentEntity.entityName = data["Parent Entity Name"];
+            parentEntity.entityID = Number(relationship["Parent Entity Id"]);
+            parentEntity.entityName = relationship["Parent Entity Name"];
 
             await entityRepo.save(parentEntity).then((parentEntity: _Entity) => {
 
@@ -44,46 +44,53 @@ export const GetOrCreate = () => {
         }
     }
 
-    const relationship = async (data: any, childEntity:_Entity, parentEntity:_Entity) => {
+    const relationship = async (relation: any, childEntity: _Entity, parentEntity: _Entity) => {
 
         let relationshipRepo = getRepository(Relationship);
         let childRepo = getRepository(_Entity);
         let parentRepo = getRepository(_Entity);
 
         let relationship: Relationship = await relationshipRepo
-            .findOne({ relationshipType: data["Relationship Type"] });
+            .findOne({ relationshipType: relation["Relationship Type"] });
 
-            relationship = new Relationship();
-            relationship.relationshipType = data["Relationship Type"];
-            relationship.childEntity = childEntity;
-            relationship.parentEntity = parentEntity;
+        relationship = new Relationship();
+        relationship.relationshipType = relation["Relationship Type"];
+        relationship.childEntity = childEntity;
+        relationship.parentEntity = parentEntity;
 
-            await relationshipRepo.save(relationship).then((relationship: Relationship) => {
+        await relationshipRepo.save(relationship).then((relationship: Relationship) => {
 
-                return relationship
-            });
+            return relationship
+        });
     }
 
-    const loan = async (data: any, childEntity:_Entity) => {
+    const loan = async (limit: any) => {
 
         let loanRepo = getRepository(Loan);
+        let entityRepo = getRepository(_Entity);
 
-        let loan: Loan = await loanRepo.findOne({ limitID: data["Limit Id"] });
+        let loan: Loan = await loanRepo.findOne({ limitID: limit["Limit Id"] });
 
         if (!loan) {
 
-            loan = new Loan();
-            loan.limitID = Number(data["Limit Id"]);
-            loan.riskTakerGroupName = data["Risk Taker Group Name"];
-            loan.riskTakerName = data["Risk Taker Name"];
-            loan.product = data["Product"];
-            loan.riskType = data["Risk Type"];
-            loan.currency = data["Currency"];
-            loan.entity = childEntity;
+            let entity: _Entity = await entityRepo.findOne({ entityID: limit["Entity Id"] });
 
-            await loanRepo.save(loan).then((loan: Loan) => {
-                return loan
-            });
+            if (entity) {
+
+                loan = new Loan();
+                loan.limitID = Number(limit["Limit Id"]);
+                loan.riskTakerGroupName = limit["Risk Taker Group Name"];
+                loan.riskTakerName = limit["Risk Taker Name"];
+                loan.product = limit["Product"];
+                loan.riskType = limit["Risk Type"];
+                loan.currency = limit["Currency"];
+                loan.entity = entity;
+
+                await loanRepo.save(loan).then((loan: Loan) => {
+
+                    return loan
+                });
+            }
         }
         return loan
     }

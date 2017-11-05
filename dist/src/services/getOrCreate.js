@@ -46,8 +46,14 @@ exports.GetOrCreate = () => {
         let parentRepo = typeorm_1.getRepository(Entity_1._Entity);
         let relationship = yield relationshipRepo
             .findOne({ relationshipType: relation["Relationship Type"] });
+        let childID = yield relationshipRepo
+            .findOne({ childID: relation["Entity Id"] });
+        let childName = yield relationshipRepo
+            .findOne({ childName: relation["Entity Name"] });
         relationship = new Relationship_1.Relationship();
         relationship.relationshipType = relation["Relationship Type"];
+        relationship.childID = Number(relation["Entity Id"]);
+        relationship.childName = relation["Entity Name"];
         relationship.childEntity = child;
         relationship.parentEntity = parent;
         yield relationshipRepo.save(relationship).then((relationship) => {
@@ -71,6 +77,9 @@ exports.GetOrCreate = () => {
                 loan.riskType = limit["Risk Type"];
                 loan.currency = limit["Currency"];
                 loan.entityID = limit["Entity Id"];
+                loan.exposureAmount = Number(limit["Exposure Amount"]);
+                loan.totalCurrentLimit = Number(limit["Total Current Limit"]);
+                loan.totalApprovedLimit = Number(limit["Total Approved Limit"]);
                 loan.facility = facility;
                 loan.limit = limits;
                 yield loanRepo.save(loan).then((loan) => {

@@ -43,6 +43,18 @@ __decorate([
     __metadata("design:type", String)
 ], Loan.prototype, "currency", void 0);
 __decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Loan.prototype, "exposureAmount", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Loan.prototype, "totalCurrentLimit", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Loan.prototype, "totalApprovedLimit", void 0);
+__decorate([
     typeorm_1.ManyToOne(type => Facility_1.Facility, facility => facility.facilityLoans, {
         cascadeInsert: true,
         cascadeUpdate: true,

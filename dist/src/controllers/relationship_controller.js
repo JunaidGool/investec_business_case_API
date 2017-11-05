@@ -9,19 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const Relationship_1 = require("../entities/Relationship");
+const Entity_1 = require("../entities/Entity");
 exports.relationship = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    const repoRelationship = typeorm_1.getRepository(Relationship_1.Relationship);
-    const relationship = yield repoRelationship.createQueryBuilder("relationship")
-        .leftJoinAndSelect("relationship.parentEntity", "entity")
+    const repoRelationship = typeorm_1.getRepository(Entity_1._Entity);
+    const relationship = yield repoRelationship
+        .createQueryBuilder("entity")
+        .innerJoinAndSelect("entity.parentRelationships", "relationship")
         .getMany();
     res.send(relationship);
-    // let relationship = await getRepository(Relationship);
-    // const relationships = await relationship
-    //                             .createQueryBuilder("relationship")
-    //                             .innerJoinAndSelect("parentEntity.parentRelationships", "entity")
-    //                             .innerJoinAndSelect("childEntity.childRelationships", "entity")
-    //                             .getMany();
-    // res.send(relationships)
 });
 //# sourceMappingURL=Relationship_controller.js.map

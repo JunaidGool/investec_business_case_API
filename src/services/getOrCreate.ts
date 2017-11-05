@@ -52,9 +52,17 @@ export const GetOrCreate = () => {
 
         let relationship: Relationship = await relationshipRepo
             .findOne({ relationshipType: relation["Relationship Type"] });
+          
+        let childID: Relationship = await relationshipRepo
+            .findOne({ childID: relation["Entity Id"]});
+        
+        let childName: Relationship = await relationshipRepo
+            .findOne({ childName: relation["Entity Name"]})
 
         relationship = new Relationship();
         relationship.relationshipType = relation["Relationship Type"];
+        relationship.childID = Number(relation["Entity Id"]);
+        relationship.childName = relation["Entity Name"];
         relationship.childEntity = child;
         relationship.parentEntity = parent;
 
@@ -85,7 +93,10 @@ export const GetOrCreate = () => {
                 loan.product = limit["Product"];
                 loan.riskType = limit["Risk Type"];
                 loan.currency = limit["Currency"];
-                loan.entityID = limit["Entity Id"]
+                loan.entityID = limit["Entity Id"];
+                loan.exposureAmount = Number(limit["Exposure Amount"]);
+                loan.totalCurrentLimit = Number(limit["Total Current Limit"]);
+                loan.totalApprovedLimit = Number(limit["Total Approved Limit"]);
 
                 loan.facility = facility;
                 loan.limit = limits

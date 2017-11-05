@@ -14,7 +14,6 @@ exports.loan = (req, res) => __awaiter(this, void 0, void 0, function* () {
     const repoLoan = typeorm_1.getRepository(Loan_1.Loan);
     const loanFacility = yield repoLoan
         .createQueryBuilder("loan")
-        .leftJoinAndSelect("loan.facility", "facility")
         .getMany();
     res.send(loanFacility);
 });

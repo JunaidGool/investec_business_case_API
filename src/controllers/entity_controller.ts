@@ -5,14 +5,13 @@ import { getRepository } from 'typeorm';
 
 export let entity = async (req: Request, res: Response) => {
 
-    const repoRelationship = getRepository(_Entity)
+  const repoRelationship = getRepository(_Entity)
 
-    const relationship = await repoRelationship.createQueryBuilder("entity")
-                                                      .innerJoinAndSelect("entity.parentRelationships", "relationship")
-                                                    //   .leftJoinAndSelect("relationship.childEntity", "entity")   
-                                                      .getMany();
+  const relationship = await repoRelationship
+    .createQueryBuilder("entity")
+    .getMany();
 
 
-    res.send(relationship)
+  res.send(relationship)
 
 }

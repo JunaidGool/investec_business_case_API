@@ -12,8 +12,8 @@ const Entity_1 = require("../entities/Entity");
 const typeorm_1 = require("typeorm");
 exports.entity = (req, res) => __awaiter(this, void 0, void 0, function* () {
     const repoRelationship = typeorm_1.getRepository(Entity_1._Entity);
-    const relationship = yield repoRelationship.createQueryBuilder("entity")
-        .innerJoinAndSelect("entity.parentRelationships", "relationship")
+    const relationship = yield repoRelationship
+        .createQueryBuilder("entity")
         .getMany();
     res.send(relationship);
 });

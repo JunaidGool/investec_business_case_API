@@ -22,21 +22,29 @@ __decorate([
     __metadata("design:type", String)
 ], Relationship.prototype, "relationshipType", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => Entity_1._Entity, entity => entity.parentRelationships, {
-        cascadeInsert: true,
-        cascadeUpdate: true,
-        cascadeRemove: true
-    }),
-    __metadata("design:type", Entity_1._Entity)
-], Relationship.prototype, "parentEntity", void 0);
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Relationship.prototype, "childID", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => Entity_1._Entity, entity => entity.childRelationships, {
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], Relationship.prototype, "childName", void 0);
+__decorate([
+    typeorm_1.ManyToOne(type => Entity_1._Entity, childEntity => childEntity.childRelationships, {
         cascadeInsert: true,
         cascadeUpdate: true,
         cascadeRemove: true
     }),
     __metadata("design:type", Entity_1._Entity)
 ], Relationship.prototype, "childEntity", void 0);
+__decorate([
+    typeorm_1.ManyToOne(type => Entity_1._Entity, parentEntity => parentEntity.parentRelationships, {
+        cascadeInsert: true,
+        cascadeUpdate: true,
+        cascadeRemove: true
+    }),
+    __metadata("design:type", Entity_1._Entity)
+], Relationship.prototype, "parentEntity", void 0);
 Relationship = __decorate([
     typeorm_1.Entity('relationship')
 ], Relationship);

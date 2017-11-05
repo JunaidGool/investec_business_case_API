@@ -27,6 +27,15 @@ export class Loan {
     @Column()
     currency: string;
 
+    @Column()
+    exposureAmount: number;
+
+    @Column()
+    totalCurrentLimit: number;
+
+    @Column()
+    totalApprovedLimit: number;
+
     // @ManyToOne(type => _Entity, entity => entity.entityLoans, {
     //     cascadeInsert: true,
     //     cascadeUpdate: true,

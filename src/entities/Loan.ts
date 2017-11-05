@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, PrimaryColumn, JoinColumn} from 'typeorm';
 import {_Entity } from './Entity';
 import { Facility } from './Facility';
 import { Limits } from './Limit';
@@ -8,6 +8,9 @@ export class Loan {
 
     @PrimaryColumn({ unique: true })
     limitID: number;
+
+    @Column()
+    entityID: number;
 
     @Column()
     riskTakerGroupName: string;
@@ -22,14 +25,14 @@ export class Loan {
     riskType: string;
 
     @Column()
-    currency: number;
+    currency: string;
 
-    @ManyToOne(type => _Entity, entity => entity.entityLoans, {
-        cascadeInsert: true,
-        cascadeUpdate: true,
-        cascadeRemove: true
-    })
-    entity: _Entity;
+    // @ManyToOne(type => _Entity, entity => entity.entityLoans, {
+    //     cascadeInsert: true,
+    //     cascadeUpdate: true,
+    //     cascadeRemove: true
+    // })
+    // entity: _Entity;
 
     @ManyToOne(type => Facility, facility => facility.facilityLoans, {
         cascadeInsert: true,
@@ -38,7 +41,7 @@ export class Loan {
     })
     facility: Facility;
 
-    @ManyToOne(type => Limits, blimit => blimit.limitLoans, {
+    @ManyToOne(type => Limits, limit => limit.limitLoans, {
         cascadeInsert: true,
         cascadeUpdate: true,
         cascadeRemove: true

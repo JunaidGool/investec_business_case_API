@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const Entity_1 = require("./Entity");
 const Facility_1 = require("./Facility");
 const Limit_1 = require("./Limit");
 let Loan = class Loan {
@@ -19,6 +18,10 @@ __decorate([
     typeorm_1.PrimaryColumn({ unique: true }),
     __metadata("design:type", Number)
 ], Loan.prototype, "limitID", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", Number)
+], Loan.prototype, "entityID", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
@@ -37,16 +40,8 @@ __decorate([
 ], Loan.prototype, "riskType", void 0);
 __decorate([
     typeorm_1.Column(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Loan.prototype, "currency", void 0);
-__decorate([
-    typeorm_1.ManyToOne(type => Entity_1._Entity, entity => entity.entityLoans, {
-        cascadeInsert: true,
-        cascadeUpdate: true,
-        cascadeRemove: true
-    }),
-    __metadata("design:type", Entity_1._Entity)
-], Loan.prototype, "entity", void 0);
 __decorate([
     typeorm_1.ManyToOne(type => Facility_1.Facility, facility => facility.facilityLoans, {
         cascadeInsert: true,
@@ -56,7 +51,7 @@ __decorate([
     __metadata("design:type", Facility_1.Facility)
 ], Loan.prototype, "facility", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => Limit_1.Limits, blimit => blimit.limitLoans, {
+    typeorm_1.ManyToOne(type => Limit_1.Limits, limit => limit.limitLoans, {
         cascadeInsert: true,
         cascadeUpdate: true,
         cascadeRemove: true

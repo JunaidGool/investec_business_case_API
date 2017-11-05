@@ -40,7 +40,7 @@ exports.GetOrCreate = () => {
             parentEntity
         };
     });
-    const relationship = (relation, childEntity, parentEntity) => __awaiter(this, void 0, void 0, function* () {
+    const relationship = (relation, child, parent) => __awaiter(this, void 0, void 0, function* () {
         let relationshipRepo = typeorm_1.getRepository(Relationship_1.Relationship);
         let childRepo = typeorm_1.getRepository(Entity_1._Entity);
         let parentRepo = typeorm_1.getRepository(Entity_1._Entity);
@@ -48,18 +48,20 @@ exports.GetOrCreate = () => {
             .findOne({ relationshipType: relation["Relationship Type"] });
         relationship = new Relationship_1.Relationship();
         relationship.relationshipType = relation["Relationship Type"];
-        relationship.childEntity = childEntity;
-        relationship.parentEntity = parentEntity;
+        relationship.childEntity = child;
+        relationship.parentEntity = parent;
         yield relationshipRepo.save(relationship).then((relationship) => {
             return relationship;
         });
     });
-    const loan = (limit) => __awaiter(this, void 0, void 0, function* () {
+    const loan = (limit, facility, limits) => __awaiter(this, void 0, void 0, function* () {
         let loanRepo = typeorm_1.getRepository(Loan_1.Loan);
         let entityRepo = typeorm_1.getRepository(Entity_1._Entity);
+        let facilityRepo = typeorm_1.getRepository(Facility_1.Facility);
+        let limitRepo = typeorm_1.getRepository(Limit_1.Limits);
         let loan = yield loanRepo.findOne({ limitID: limit["Limit Id"] });
+        let entity = yield entityRepo.findOne({ entityID: limit["Entity Id"] });
         if (!loan) {
-            let entity = yield entityRepo.findOne({ entityID: limit["Entity Id"] });
             if (entity) {
                 loan = new Loan_1.Loan();
                 loan.limitID = Number(limit["Limit Id"]);
@@ -68,7 +70,9 @@ exports.GetOrCreate = () => {
                 loan.product = limit["Product"];
                 loan.riskType = limit["Risk Type"];
                 loan.currency = limit["Currency"];
-                loan.entity = entity;
+                loan.entityID = limit["Entity Id"];
+                loan.facility = facility;
+                loan.limit = limits;
                 yield loanRepo.save(loan).then((loan) => {
                     return loan;
                 });

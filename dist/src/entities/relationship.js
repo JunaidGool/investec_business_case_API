@@ -22,7 +22,7 @@ __decorate([
     __metadata("design:type", String)
 ], Relationship.prototype, "relationshipType", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => Entity_1._Entity, parentEntity => parentEntity.parentRelationships, {
+    typeorm_1.ManyToOne(type => Entity_1._Entity, entity => entity.parentRelationships, {
         cascadeInsert: true,
         cascadeUpdate: true,
         cascadeRemove: true
@@ -30,7 +30,7 @@ __decorate([
     __metadata("design:type", Entity_1._Entity)
 ], Relationship.prototype, "parentEntity", void 0);
 __decorate([
-    typeorm_1.ManyToOne(type => Entity_1._Entity, childEntity => childEntity.childRelationships, {
+    typeorm_1.ManyToOne(type => Entity_1._Entity, entity => entity.childRelationships, {
         cascadeInsert: true,
         cascadeUpdate: true,
         cascadeRemove: true

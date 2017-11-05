@@ -4,5 +4,13 @@ import {getRepository} from 'typeorm';
 
 export let limit = async(req: Request, res: Response) => {
 
-    res.send("limit Route")
+    const repoLimits = getRepository(Limits)
+    
+        const limitLoans = await repoLimits
+                               .createQueryBuilder("limits")
+                               .leftJoinAndSelect("limits.limitLoans", "loan")
+                               .getMany();
+
+    res.send(limitLoans)
+
 }

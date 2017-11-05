@@ -11,8 +11,8 @@ export class _Entity {
     @Column()
     entityName: string;
 
-    @OneToMany(type => Loan, entityLimit => entityLimit.entity)
-    entityLoans: Loan[];
+    // @OneToMany(type => Loan, entityLimit => entityLimit.entity)
+    // entityLoans: Loan[];
 
     @OneToMany(type => Relationship, parentRelationship => parentRelationship.parentEntity)
     parentRelationships: Relationship[];

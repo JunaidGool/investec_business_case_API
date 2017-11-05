@@ -44,7 +44,7 @@ export const GetOrCreate = () => {
         }
     }
 
-    const relationship = async (relation: any, childEntity: _Entity, parentEntity: _Entity) => {
+    const relationship = async (relation: any, child: _Entity, parent: _Entity) => {
 
         let relationshipRepo = getRepository(Relationship);
         let childRepo = getRepository(_Entity);
@@ -55,8 +55,8 @@ export const GetOrCreate = () => {
 
         relationship = new Relationship();
         relationship.relationshipType = relation["Relationship Type"];
-        relationship.childEntity = childEntity;
-        relationship.parentEntity = parentEntity;
+        relationship.childEntity = child;
+        relationship.parentEntity = parent;
 
         await relationshipRepo.save(relationship).then((relationship: Relationship) => {
 
@@ -64,16 +64,17 @@ export const GetOrCreate = () => {
         });
     }
 
-    const loan = async (limit: any) => {
+    const loan = async (limit: any, facility: Facility, limits: Limits) => {
 
         let loanRepo = getRepository(Loan);
         let entityRepo = getRepository(_Entity);
+        let facilityRepo = getRepository(Facility);
+        let limitRepo = getRepository(Limits);
 
         let loan: Loan = await loanRepo.findOne({ limitID: limit["Limit Id"] });
+        let entity: _Entity = await entityRepo.findOne({ entityID: limit["Entity Id"] })
 
         if (!loan) {
-
-            let entity: _Entity = await entityRepo.findOne({ entityID: limit["Entity Id"] });
 
             if (entity) {
 
@@ -84,7 +85,10 @@ export const GetOrCreate = () => {
                 loan.product = limit["Product"];
                 loan.riskType = limit["Risk Type"];
                 loan.currency = limit["Currency"];
-                loan.entity = entity;
+                loan.entityID = limit["Entity Id"]
+
+                loan.facility = facility;
+                loan.limit = limits
 
                 await loanRepo.save(loan).then((loan: Loan) => {
 

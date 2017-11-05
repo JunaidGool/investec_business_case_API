@@ -1,8 +1,19 @@
-import {Request, Response} from 'express';
-import {Loan} from '../entities/Loan';
-import {getRepository} from 'typeorm';
+import { Request, Response } from 'express';
+import { Loan } from '../entities/Loan';
+import { Facility } from '../entities/Facility'
 
-export let loan = async (req: Request,res: Response) => {
+import { getRepository } from 'typeorm';
 
-    res.send("loan Route")
+export let loan = async (req: Request, res: Response) => {
+
+    const repoLoan = getRepository(Loan)
+
+    const loanFacility = await repoLoan
+        .createQueryBuilder("loan")
+        .leftJoinAndSelect("loan.facility", "facility")
+        .getMany();
+
+
+    res.send(loanFacility)
+
 }

@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const Loan_1 = require("./Loan");
 const Relationship_1 = require("./Relationship");
 let _Entity = class _Entity {
 };
@@ -22,10 +21,6 @@ __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
 ], _Entity.prototype, "entityName", void 0);
-__decorate([
-    typeorm_1.OneToMany(type => Loan_1.Loan, entityLimit => entityLimit.entity),
-    __metadata("design:type", Array)
-], _Entity.prototype, "entityLoans", void 0);
 __decorate([
     typeorm_1.OneToMany(type => Relationship_1.Relationship, parentRelationship => parentRelationship.parentEntity),
     __metadata("design:type", Array)

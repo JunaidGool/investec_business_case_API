@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
-import {Loan} from './Loan'
+import { Entity, Column, PrimaryColumn, OneToMany, JoinColumn } from 'typeorm';
+import {Loan} from './Loan';
 
 @Entity('facility')
 export class Facility {

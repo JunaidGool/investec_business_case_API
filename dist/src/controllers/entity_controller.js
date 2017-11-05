@@ -8,7 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Entity_1 = require("../entities/Entity");
+const typeorm_1 = require("typeorm");
 exports.entity = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    res.send("entity Route");
+    const repoRelationship = typeorm_1.getRepository(Entity_1._Entity);
+    const relationship = yield repoRelationship.createQueryBuilder("entity")
+        .innerJoinAndSelect("entity.parentRelationships", "relationship")
+        .getMany();
+    res.send(relationship);
 });
 //# sourceMappingURL=entity_controller.js.map

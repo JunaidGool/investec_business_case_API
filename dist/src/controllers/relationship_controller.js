@@ -8,7 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const typeorm_1 = require("typeorm");
+const Relationship_1 = require("../entities/Relationship");
 exports.relationship = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    res.send("entityRelationship Route");
+    const repoRelationship = typeorm_1.getRepository(Relationship_1.Relationship);
+    const relationship = yield repoRelationship.createQueryBuilder("relationship")
+        .leftJoinAndSelect("relationship.parentEntity", "entity")
+        .getMany();
+    res.send(relationship);
+    // let relationship = await getRepository(Relationship);
+    // const relationships = await relationship
+    //                             .createQueryBuilder("relationship")
+    //                             .innerJoinAndSelect("parentEntity.parentRelationships", "entity")
+    //                             .innerJoinAndSelect("childEntity.childRelationships", "entity")
+    //                             .getMany();
+    // res.send(relationships)
 });
 //# sourceMappingURL=Relationship_controller.js.map

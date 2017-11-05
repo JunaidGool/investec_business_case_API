@@ -8,7 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Loan_1 = require("../entities/Loan");
+const typeorm_1 = require("typeorm");
 exports.loan = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    res.send("loan Route");
+    const repoLoan = typeorm_1.getRepository(Loan_1.Loan);
+    const loanFacility = yield repoLoan
+        .createQueryBuilder("loan")
+        .leftJoinAndSelect("loan.facility", "facility")
+        .getMany();
+    res.send(loanFacility);
 });
 //# sourceMappingURL=loan_controller.js.map

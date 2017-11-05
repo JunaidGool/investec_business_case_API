@@ -3,12 +3,14 @@ import * as bodyParser from 'body-parser';
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import * as apiConfig from './common/api_config';
-import {_Entity} from './entities/Entity'
+import { _Entity } from './entities/Entity';
+import { Facility } from './entities/Facility';
+import { Limits } from './entities/Limit';
 import { relationshipData } from '../relationship_data';
 import { limitData } from '../limit_data';
 import { GetOrCreate } from './services/getOrCreate';
-import { Relationship} from './entities/Relationship'
-import {getRepository} from 'typeorm';
+import { Relationship } from './entities/Relationship'
+import { getRepository } from 'typeorm';
 
 /**
  * Controllers (route handlers)
@@ -24,14 +26,14 @@ import * as limitController from './controllers/limit_controller';
  */
 const api = express();
 api.use(bodyParser.json());
-api.use(bodyParser.urlencoded({extended: true}));
+api.use(bodyParser.urlencoded({ extended: true }));
 
-api.use(function(req, res, next){
+api.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
-  });
+});
 
 /**
  * Express Configuration
@@ -51,7 +53,7 @@ api.listen(api.get('port'), () => {
  */
 api.get('/api/entity', entityController.entity);
 api.get('/api/loan', loantController.loan);
-api.get('/api/relationship', relationshipController.relationship );
+api.get('/api/relationship', relationshipController.relationship);
 api.get('/api/facility', facilityController.facility);
 api.get('/api/limit', limitController.limit);
 
@@ -65,11 +67,11 @@ createConnection(apiConfig.dbOptions).then(async connection => {
     let getOrCreate = GetOrCreate();
     let relationshipRepo = getRepository(Relationship);
     let relationship: any;
-    let limit : any;
+    let limit: any;
 
     relationshipRepo.query("DELETE FROM relationship");
 
-    for(relationship of relationshipData){
+    for (relationship of relationshipData) {
 
         // 1. get or create entity table
         let entityTable = await getOrCreate.entity(relationship);
@@ -78,22 +80,23 @@ createConnection(apiConfig.dbOptions).then(async connection => {
         let parentEntity = entityTable.parentEntity;
 
         // 2. get or create relationship table
-         let relationshipTable = await getOrCreate.relationship(relationship, childEntity, parentEntity);
+        let relationshipTable = await getOrCreate.relationship(relationship, childEntity, parentEntity);
 
+        for (limit of limitData) {
+
+            // 3. get or create limit table
+            let limitsTable = await getOrCreate.limit(limit);
+
+            // 4. get or create facility table
+            let facilityTable = await getOrCreate.facility(limit);
+
+            // 5. get or create limit table
+            let loanTable = await getOrCreate.loan(limit, facilityTable, limitsTable);
+
+        }
     }
 
-    for(limit of limitData){
 
-        // 3. get or create limit table
-        let loanTable = await getOrCreate.loan(limit);
-
-        // 4. get or create facility table
-        let facilityTable = await getOrCreate.facility(limit);
-
-        // 5. get or create limit table
-        let limitsTable = await getOrCreate.limit(limit);
-
-    }
 
 }).catch(error => console.log('TypeORM connection error: ', error));
 

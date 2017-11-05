@@ -13,11 +13,7 @@ const bodyParser = require("body-parser");
 require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const apiConfig = require("./common/api_config");
-const relationship_data_1 = require("../relationship_data");
-const limit_data_1 = require("../limit_data");
-const getOrCreate_1 = require("./services/getOrCreate");
-const Relationship_1 = require("./entities/Relationship");
-const typeorm_2 = require("typeorm");
+const populateTables_1 = require("./services/populateTables");
 /**
  * Controllers (route handlers)
  */
@@ -63,27 +59,8 @@ api.get('/api/limit', limitController.limit);
  */
 typeorm_1.createConnection(apiConfig.dbOptions).then((connection) => __awaiter(this, void 0, void 0, function* () {
     console.log('Connected to DB');
-    let getOrCreate = getOrCreate_1.GetOrCreate();
-    let relationshipRepo = typeorm_2.getRepository(Relationship_1.Relationship);
-    let relationship;
-    let limit;
-    relationshipRepo.query("DELETE FROM relationship");
-    for (relationship of relationship_data_1.relationshipData) {
-        // 1. get or create entity table
-        let entityTable = yield getOrCreate.entity(relationship);
-        let childEntity = entityTable.childEntity;
-        let parentEntity = entityTable.parentEntity;
-        // 2. get or create relationship table
-        let relationshipTable = yield getOrCreate.relationship(relationship, childEntity, parentEntity);
-        for (limit of limit_data_1.limitData) {
-            // 3. get or create limit table
-            let limitsTable = yield getOrCreate.limit(limit);
-            // 4. get or create facility table
-            let facilityTable = yield getOrCreate.facility(limit);
-            // 5. get or create limit table
-            let loanTable = yield getOrCreate.loan(limit, facilityTable, limitsTable);
-        }
-    }
+    let populateTable = populateTables_1.PopulateTables();
+    console.log("Tables succesfully populated");
 })).catch(error => console.log('TypeORM connection error: ', error));
 module.exports = api;
 //# sourceMappingURL=api.js.map

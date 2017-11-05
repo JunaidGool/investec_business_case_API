@@ -36,13 +36,6 @@ export class Loan {
     @Column()
     totalApprovedLimit: number;
 
-    // @ManyToOne(type => _Entity, entity => entity.entityLoans, {
-    //     cascadeInsert: true,
-    //     cascadeUpdate: true,
-    //     cascadeRemove: true
-    // })
-    // entity: _Entity;
-
     @ManyToOne(type => Facility, facility => facility.facilityLoans, {
         cascadeInsert: true,
         cascadeUpdate: true,

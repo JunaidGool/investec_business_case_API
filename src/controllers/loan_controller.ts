@@ -9,9 +9,8 @@ export let loan = async (req: Request, res: Response) => {
     const repoLoan = getRepository(Loan)
 
     const loanFacility = await repoLoan
-        .createQueryBuilder("loan")
-        // .leftJoinAndSelect("loan.facility", "facility")
-        .getMany();
+                               .createQueryBuilder("loan")
+                               .getMany();
 
 
     res.send(loanFacility)

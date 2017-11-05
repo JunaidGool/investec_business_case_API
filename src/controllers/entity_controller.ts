@@ -8,9 +8,8 @@ export let entity = async (req: Request, res: Response) => {
   const repoRelationship = getRepository(_Entity)
 
   const relationship = await repoRelationship
-    .createQueryBuilder("entity")
-    .getMany();
-
+                              .createQueryBuilder("entity")
+                              .getMany();
 
   res.send(relationship)
 

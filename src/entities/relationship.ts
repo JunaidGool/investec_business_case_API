@@ -1,7 +1,6 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import {_Entity } from './Entity';
 
-
 @Entity('relationship')
 export class Relationship {
 
@@ -17,9 +16,6 @@ export class Relationship {
     @Column()
     childName: string;
 
-    // @Column()
-    // childName: string;
-
     @ManyToOne(type => _Entity, childEntity => childEntity.childRelationships, {
         cascadeInsert: true,
         cascadeUpdate: true,
@@ -33,7 +29,5 @@ export class Relationship {
         cascadeRemove: true
     })
     parentEntity: _Entity;
-
-
-    
+ 
 }

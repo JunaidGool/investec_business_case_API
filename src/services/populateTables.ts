@@ -1,5 +1,5 @@
 import { _Entity } from '../entities/Entity';
-import { Relationship } from '../entities/Relationship';
+import { Relationship } from '../entities/relationship';
 import { relationshipData } from '../../relationship_data';
 import { limitData } from '../../limit_data';
 import { GetOrCreate } from './getOrCreate';

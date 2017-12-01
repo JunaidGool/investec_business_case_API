@@ -49,4 +49,4 @@ Relationship = __decorate([
     typeorm_1.Entity('relationship')
 ], Relationship);
 exports.Relationship = Relationship;
-//# sourceMappingURL=Relationship.js.map
+//# sourceMappingURL=relationship.js.map

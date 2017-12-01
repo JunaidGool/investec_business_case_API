@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const Relationship_1 = require("./Relationship");
+const relationship_1 = require("./relationship");
 let _Entity = class _Entity {
 };
 __decorate([
@@ -22,11 +22,11 @@ __decorate([
     __metadata("design:type", String)
 ], _Entity.prototype, "entityName", void 0);
 __decorate([
-    typeorm_1.OneToMany(type => Relationship_1.Relationship, parentRelationship => parentRelationship.parentEntity),
+    typeorm_1.OneToMany(type => relationship_1.Relationship, parentRelationship => parentRelationship.parentEntity),
     __metadata("design:type", Array)
 ], _Entity.prototype, "parentRelationships", void 0);
 __decorate([
-    typeorm_1.OneToMany(type => Relationship_1.Relationship, childRelationship => childRelationship.childEntity),
+    typeorm_1.OneToMany(type => relationship_1.Relationship, childRelationship => childRelationship.childEntity),
     __metadata("design:type", Array)
 ], _Entity.prototype, "childRelationships", void 0);
 _Entity = __decorate([

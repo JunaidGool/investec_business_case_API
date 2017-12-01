@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn, OneToMany} from 'typeorm';
 import { Loan } from './Loan';
-import { Relationship } from './Relationship';
+import { Relationship } from './relationship';
 
 @Entity('entity')
 export class _Entity {

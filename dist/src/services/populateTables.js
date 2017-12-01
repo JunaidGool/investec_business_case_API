@@ -8,14 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Relationship_1 = require("../entities/Relationship");
+const relationship_1 = require("../entities/relationship");
 const relationship_data_1 = require("../../relationship_data");
 const limit_data_1 = require("../../limit_data");
 const getOrCreate_1 = require("./getOrCreate");
 const typeorm_1 = require("typeorm");
 exports.PopulateTables = () => __awaiter(this, void 0, void 0, function* () {
     let getOrCreate = getOrCreate_1.GetOrCreate();
-    let relationshipRepo = typeorm_1.getRepository(Relationship_1.Relationship);
+    let relationshipRepo = typeorm_1.getRepository(relationship_1.Relationship);
     let relationship;
     let limit;
     relationshipRepo.query("DELETE FROM relationship");

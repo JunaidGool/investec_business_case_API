@@ -27,14 +27,14 @@ export class Loan {
     @Column()
     currency: string;
 
-    @Column()
-    exposureAmount: number;
+    // @Column()
+    // exposureAmount: number;
 
-    @Column()
-    totalCurrentLimit: number;
+    // @Column()
+    // totalCurrentLimit: number;
 
-    @Column()
-    totalApprovedLimit: number;
+    // @Column()
+    // totalApprovedLimit: number;
 
     @ManyToOne(type => Facility, facility => facility.facilityLoans, {
         cascadeInsert: true,

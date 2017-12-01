@@ -12,7 +12,7 @@ const Entity_1 = require("../entities/Entity");
 const Facility_1 = require("../entities/Facility");
 const Limit_1 = require("../entities/Limit");
 const Loan_1 = require("../entities/Loan");
-const Relationship_1 = require("../entities/Relationship");
+const relationship_1 = require("../entities/relationship");
 const typeorm_1 = require("typeorm");
 exports.GetOrCreate = () => {
     const entity = (relationship) => __awaiter(this, void 0, void 0, function* () {
@@ -41,7 +41,7 @@ exports.GetOrCreate = () => {
         };
     });
     const relationship = (relation, child, parent) => __awaiter(this, void 0, void 0, function* () {
-        let relationshipRepo = typeorm_1.getRepository(Relationship_1.Relationship);
+        let relationshipRepo = typeorm_1.getRepository(relationship_1.Relationship);
         let childRepo = typeorm_1.getRepository(Entity_1._Entity);
         let parentRepo = typeorm_1.getRepository(Entity_1._Entity);
         let relationship = yield relationshipRepo
@@ -50,7 +50,7 @@ exports.GetOrCreate = () => {
             .findOne({ childID: relation["Entity Id"] });
         let childName = yield relationshipRepo
             .findOne({ childName: relation["Entity Name"] });
-        relationship = new Relationship_1.Relationship();
+        relationship = new relationship_1.Relationship();
         relationship.relationshipType = relation["Relationship Type"];
         relationship.childID = Number(relation["Entity Id"]);
         relationship.childName = relation["Entity Name"];
@@ -77,9 +77,9 @@ exports.GetOrCreate = () => {
                 loan.riskType = limit["Risk Type"];
                 loan.currency = limit["Currency"];
                 loan.entityID = limit["Entity Id"];
-                loan.exposureAmount = Number(limit["Exposure Amount"]);
-                loan.totalCurrentLimit = Number(limit["Total Current Limit"]);
-                loan.totalApprovedLimit = Number(limit["Total Approved Limit"]);
+                // loan.exposureAmount = Number(limit["Exposure Amount"]);
+                // loan.totalCurrentLimit = Number(limit["Total Current Limit"]);
+                // loan.totalApprovedLimit = Number(limit["Total Approved Limit"]);
                 loan.facility = facility;
                 loan.limit = limits;
                 yield loanRepo.save(loan).then((loan) => {

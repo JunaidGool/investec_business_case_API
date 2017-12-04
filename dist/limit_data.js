@@ -267,7 +267,7 @@ exports.limitData = [
         "Product": "FOREX DERIV",
         "Risk Type": "NR",
         "Currency": "USD",
-        "Exposure Amount": "32496301.8",
+        "Exposure Amount": "32496301",
         "Total Current Limit": "17500000",
         "Total Approved Limit": "17500000"
     },

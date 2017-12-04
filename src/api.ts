@@ -21,6 +21,8 @@ const api = express();
 api.use(bodyParser.json());
 api.use(bodyParser.urlencoded({ extended: true }));
 
+api.use(express.static('public'));
+
 api.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
@@ -40,6 +42,7 @@ api.listen(api.get('port'), () => {
     console.log(('  Api is running at http://localhost:%d in %s mode'), api.get('port'), api.get('env'));
     console.log(' Press CTRL-C to stop\n');
 });
+
 
 /**
  * Primary Api Routes

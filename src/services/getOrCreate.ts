@@ -94,9 +94,9 @@ export const GetOrCreate = () => {
                 loan.riskType = limit["Risk Type"];
                 loan.currency = limit["Currency"];
                 loan.entityID = limit["Entity Id"];
-                // loan.exposureAmount = Number(limit["Exposure Amount"]);
-                // loan.totalCurrentLimit = Number(limit["Total Current Limit"]);
-                // loan.totalApprovedLimit = Number(limit["Total Approved Limit"]);
+                loan.exposureAmount = Number(limit["Exposure Amount"]);
+                loan.totalCurrentLimit = Number(limit["Total Current Limit"]);
+                loan.totalApprovedLimit = Number(limit["Total Approved Limit"]);
 
                 loan.facility = facility;
                 loan.limit = limits

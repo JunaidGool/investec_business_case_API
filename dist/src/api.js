@@ -28,6 +28,7 @@ const limitController = require("./controllers/limit_controller");
 const api = express();
 api.use(bodyParser.json());
 api.use(bodyParser.urlencoded({ extended: true }));
+api.use(express.static('public'));
 api.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
